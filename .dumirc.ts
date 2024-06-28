@@ -20,4 +20,9 @@ export default defineConfig({
     { name: 'English', id: 'en-US' },
     { name: '简体中文', id: 'zh-CN' },
   ],
+  base: '/mirror/pro-editor',
+  publicPath: '/mirror/ant-pro-editor/',
+  manifest: {
+    basePath: '/mirror/ant-pro-editor',
+  },
 });

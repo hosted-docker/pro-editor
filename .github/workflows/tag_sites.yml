@@ -1,0 +1,40 @@
+name: Deploy CI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install and Build 🔧
+        run: |
+          pnpm i
+          pnpm run lint
+          pnpm run docs:build
+
+      - name: zip zite
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r ant-pro-editor.zip docs-dist
+
+      - name: Generate release tag
+        id: tag
+        run: |
+          echo "::set-output name=release_tag::pro-editor-sites_$(date +"%Y.%m.%d_%H_%M_%S")"
