@@ -1,4 +1,4 @@
-name: Deploy CI
+name: Tag & Sites
 
 on:
   push:
@@ -26,7 +26,6 @@ jobs:
       - name: Install and Build 🔧
         run: |
           pnpm i
-          pnpm run lint
           pnpm run docs:build
 
       - name: zip zite
